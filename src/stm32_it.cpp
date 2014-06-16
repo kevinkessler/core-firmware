@@ -244,13 +244,15 @@ void USART2_IRQHandler(void)
  * Output         : None
  * Return         : None
  *******************************************************************************/
-void I2C1_EV_IRQHandler(void)
+// KMK: Removed I2C1 IRQ Handler to let CPAL handle it
+
+/*void I2C1_EV_IRQHandler(void)
 {
 	if(NULL != Wiring_I2C1_EV_Interrupt_Handler)
 	{
 		Wiring_I2C1_EV_Interrupt_Handler();
 	}
-}
+}*/
 
 /*******************************************************************************
  * Function Name  : I2C1_ER_IRQHandler
@@ -259,13 +261,14 @@ void I2C1_EV_IRQHandler(void)
  * Output         : None
  * Return         : None
  *******************************************************************************/
-void I2C1_ER_IRQHandler(void)
+// KMK: Removed I2C1 IRQ Handler to let CPAL handle it
+/*void I2C1_ER_IRQHandler(void)
 {
 	if(NULL != Wiring_I2C1_ER_Interrupt_Handler)
 	{
 		Wiring_I2C1_ER_Interrupt_Handler();
 	}
-}
+}*/
 
 /*******************************************************************************
  * Function Name  : SPI1_IRQHandler
@@ -553,13 +556,14 @@ void TIM3_IRQHandler(void)
  * Output         : None
  * Return         : None
  *******************************************************************************/
-void TIM4_IRQHandler(void)
+ //KMK: Removed Timer 4 for use with CPAL
+/*void TIM4_IRQHandler(void)
 {
 	if(NULL != Wiring_TIM4_Interrupt_Handler)
 	{
 		Wiring_TIM4_Interrupt_Handler();
 	}
-}
+}*/
 
 /*******************************************************************************
  * Function Name  : RTC_IRQHandler

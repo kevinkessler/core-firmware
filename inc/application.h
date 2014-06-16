@@ -26,6 +26,12 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
+#define SPARK_CORE (1)
+
+#include "cpal.h"
+#include "cpal_i2c.h"
+extern CPAL_InitTypeDef I2C1_DevStructure;
+
 #include "spark_wiring.h"
 #include "spark_wiring_interrupts.h"
 #include "spark_wiring_string.h"
@@ -37,12 +43,15 @@
 #include "spark_wiring_servo.h"
 #include "spark_wiring_wifi.h"
 #include "spark_wiring_network.h"
-#include "spark_wiring_client.h"  
 #include "spark_wiring_tcpclient.h"
 #include "spark_wiring_tcpserver.h"
 #include "spark_wiring_udp.h"
-#include "spark_wiring_time.h"
-#include "spark_wiring_tone.h"
-#include "spark_wiring_eeprom.h"
+
+#include "max44009.h"
+#include "bmp085.h"
+#include "i2c.h"
+#include "DS18B20.h"
+#include "OneWire.h"
+#include "mpl3115.h"
 
 #endif /* APPLICATION_H_ */
