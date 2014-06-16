@@ -60,8 +60,9 @@ INCLUDE_DIRS += $(LIB_CORE_COMMON_PATH)/SPARK_Firmware_Driver/inc
 INCLUDE_DIRS += $(LIB_CORE_COMMUNICATION_PATH)/lib/tropicssl/include
 INCLUDE_DIRS += $(LIB_CORE_COMMUNICATION_PATH)/src
 
+# KMK: Added c99 compatibility
 # Compiler flags
-CFLAGS =  -g3 -gdwarf-2 -Os -mcpu=cortex-m3 -mthumb 
+CFLAGS =  -g3 -gdwarf-2 -Os -mcpu=cortex-m3 -mthumb -std=c99
 CFLAGS += $(patsubst %,-I$(SRC_PATH)/%,$(INCLUDE_DIRS)) -I.
 CFLAGS += -ffunction-sections -Wall -fmessage-length=0
 

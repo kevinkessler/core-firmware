@@ -31,6 +31,7 @@ void i2cTimeDeInit(void);
 uint8_t i2cWrite(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData);
 uint8_t i2cRead(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData);
 void i2cReset(void);
+void i2cScan(void);
 
 #ifdef __cplusplus
 }

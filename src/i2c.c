@@ -142,10 +142,9 @@ void i2cReset()
 	}
 }
 
- /*
+
 void i2cScan()
 {
-    uint8_t b=0;
     uint8_t results[256];
     for (uint8_t n=0;n<255;n++)
     {
@@ -161,4 +160,4 @@ void i2cScan()
     	DEBUG("%X %X : %X %X : %X %X : %X %X : %X %X",n,results[n],n+1,results[n+1],n+2,results[n+2],n+3,results[n+3],n+4,results[n+4]);
     }
 
-}*/
+}
