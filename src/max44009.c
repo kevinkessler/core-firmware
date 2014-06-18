@@ -16,16 +16,16 @@ float max44009GetLux()
 	if(MAXStatus == MAX44009_FAIL)
 		i2cReset();
 
-	MAXBuffer[0]=0x03;
-	if(i2cWrite(0x4B,0,MAXBuffer,1) == CPAL_FAIL)
-	{
-		MAXStatus=MAX44009_FAIL;
-		return 0.0;
-	}
-	else
-		MAXStatus=MAX44009_ACTIVE;
+//	MAXBuffer[0]=0x03;
+//	if(i2cWrite(0x4B,0,MAXBuffer,1) == CPAL_FAIL)
+//	{
+//		MAXStatus=MAX44009_FAIL;
+//		return 0.0;
+//	}
+//	else
+//		MAXStatus=MAX44009_ACTIVE;
 
-	if(i2cRead(0x4B,0,MAXBuffer,1) == CPAL_FAIL)
+	if(i2cRead(0x4B,0x03,MAXBuffer,1) == CPAL_FAIL)
 	{
 		MAXStatus=MAX44009_FAIL;
 		return 0.0;
@@ -35,16 +35,16 @@ float max44009GetLux()
 
 	uint8_t luxHigh=MAXBuffer[0];
 
-	MAXBuffer[0]=0x04;
-	if(i2cWrite(0x4B,0, MAXBuffer,1) == CPAL_FAIL)
-	{
-		MAXStatus=MAX44009_FAIL;
-		return 0.0;
-	}
-	else
-		MAXStatus=MAX44009_ACTIVE;
+//	MAXBuffer[0]=0x04;
+//	if(i2cWrite(0x4B,0, MAXBuffer,1) == CPAL_FAIL)
+//	{
+//		MAXStatus=MAX44009_FAIL;
+//		return 0.0;
+//	}
+//	else
+//		MAXStatus=MAX44009_ACTIVE;
 
-	if(i2cRead(0x4B,0,MAXBuffer,1) == CPAL_FAIL)
+	if(i2cRead(0x4B,0x04,MAXBuffer,1) == CPAL_FAIL)
 	{
 		MAXStatus=MAX44009_FAIL;
 		return 0.0;

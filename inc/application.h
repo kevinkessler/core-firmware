@@ -26,11 +26,8 @@
 #ifndef APPLICATION_H_
 #define APPLICATION_H_
 
-#define SPARK_CORE (1)
-
 #include "cpal.h"
 #include "cpal_i2c.h"
-extern CPAL_InitTypeDef I2C1_DevStructure;
 
 #include "spark_wiring.h"
 #include "spark_wiring_interrupts.h"

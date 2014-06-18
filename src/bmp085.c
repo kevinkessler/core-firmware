@@ -71,12 +71,8 @@ uint8_t bmp085Read(uint8_t addr2, uint8_t numData)
 uint16_t bmp085ReadInt(uint8_t addr)
 {
 
-	BMPBuffer[0]=addr;
-	if(bmp085Write(0,1) == BMP085_FAIL)
-		return 0x00;
 
-
-	if(bmp085Read(0,2) == BMP085_FAIL)
+	if(bmp085Read(addr,2) == BMP085_FAIL)
 		return 0x00;
 
 	return BMPBuffer[0]<<8|BMPBuffer[1];
@@ -131,9 +127,9 @@ int32_t bmp085GetPressure(uint32_t up)
 
 uint16_t bmp085ReadUT()
 {
-	BMPBuffer[0]=0xF4;
-	BMPBuffer[1]=0x2E;
-	if(bmp085Write(0,2) == BMP085_FAIL)
+
+	BMPBuffer[0]=0x2E;
+	if(bmp085Write(0xF4,1) == BMP085_FAIL)
 		return 0x00;
 
 	delay(5);
@@ -143,18 +139,15 @@ uint16_t bmp085ReadUT()
 
 uint32_t bmp085ReadUP()
 {
-	BMPBuffer[0]=0xF4;
-	BMPBuffer[1]=0x34 + (OSS<<6);
-	if(bmp085Write(0,2) == BMP085_FAIL)
+
+	BMPBuffer[0]=0x34 + (OSS<<6);
+	if(bmp085Write(0xF4,1) == BMP085_FAIL)
 		return 0x00;
 
 	delay(2 + (3 << OSS));
 
-	BMPBuffer[0]=0xF6;
-	if(bmp085Write(0,1) == BMP085_FAIL)
-		return 0x00;
 
-	if(bmp085Read(0,3) == BMP085_FAIL)
+	if(bmp085Read(0xF6,3) == BMP085_FAIL)
 		return 0x00;
 
 	return (((uint32_t)BMPBuffer[0]<<16)|((uint32_t)BMPBuffer[1] << 8) | ((uint32_t)BMPBuffer[2])) >> (8-OSS);

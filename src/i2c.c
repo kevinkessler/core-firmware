@@ -62,7 +62,8 @@ void i2cInitialize()
 	CPAL_I2C_StructInit(&I2C1_DevStructure);
 	I2C1_DevStructure.CPAL_Mode = CPAL_MODE_MASTER;
 	I2C1_DevStructure.CPAL_ProgModel = CPAL_PROGMODEL_INTERRUPT;
-	I2C1_DevStructure.wCPAL_Options=CPAL_OPT_NO_MEM_ADDR;
+	//I2C1_DevStructure.wCPAL_Options=CPAL_OPT_NO_MEM_ADDR;
+	I2C1_DevStructure.wCPAL_Options=0x00;
 
 	I2C1_DevStructure.pCPAL_I2C_Struct = InitStruct;
 

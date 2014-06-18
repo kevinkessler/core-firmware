@@ -11,6 +11,7 @@ void setup()
 {
 	i2cInitialize();
 	bmp085Calibration();
+	mpl3115Init();
 
 #if defined (DEBUG_BUILD)
 	DEBUG("One Wire Device Addresses");
@@ -62,8 +63,8 @@ void loop()
 	uint8_t status=mpl3115Measure();
 	if(status==MPL3115_SUCCESS)
 	{
-		temp=mpl3115GetTemperature();
-		press=mpl3115GetPressure();
+		float temp=mpl3115GetTemperature();
+		float press=mpl3115GetPressure();
 		DEBUG("MPL3115 T=%f Press=%f",temp,press);
 	}
 	else

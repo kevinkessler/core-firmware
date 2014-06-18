@@ -60,9 +60,9 @@ INCLUDE_DIRS += $(LIB_CORE_COMMON_PATH)/SPARK_Firmware_Driver/inc
 INCLUDE_DIRS += $(LIB_CORE_COMMUNICATION_PATH)/lib/tropicssl/include
 INCLUDE_DIRS += $(LIB_CORE_COMMUNICATION_PATH)/src
 
-# KMK: Added c99 compatibility
+
 # Compiler flags
-CFLAGS =  -g3 -gdwarf-2 -Os -mcpu=cortex-m3 -mthumb -std=c99
+CFLAGS =  -g3 -gdwarf-2 -Os -mcpu=cortex-m3 -mthumb
 CFLAGS += $(patsubst %,-I$(SRC_PATH)/%,$(INCLUDE_DIRS)) -I.
 CFLAGS += -ffunction-sections -Wall -fmessage-length=0
 
@@ -167,12 +167,13 @@ check_external_deps:
 
 # Tool invocations
 
+# KMK: Added c99 compatibility
 # C compiler to build .o from .c in $(BUILD_DIR)
 $(BUILD_PATH)/%.o : $(SRC_PATH)/%.c
 	@echo Building file: $<
 	@echo Invoking: ARM GCC C Compiler
 	$(MKDIR) $(dir $@)
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS)  -std=c99 -c -o $@ $<
 	@echo
 
 # Assember to build .o from .S in $(BUILD_DIR)

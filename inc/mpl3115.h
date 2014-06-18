@@ -27,6 +27,8 @@
 uint8_t mpl3115Measure(void);
 float mpl3115GetPressure(void);
 float mpl3115GetTemperature(void);
+uint8_t mpl3115Init(void);
+void toggleOST(void);
 
 #ifdef __cplusplus
 }
