@@ -42,15 +42,24 @@ uint8_t mpl3115Measure()
 	}
 
 	if(count==200)
+	{
+		toggleOST();
 		return MPL3115_FAIL;
+	}
 
 	uint8_t pressBytes[3];
 	if(i2cRead(MPL3115_ADDR,OUT_P_MSB,pressBytes,3)==CPAL_FAIL)
+	{
+		toggleOST();
 		return MPL3115_FAIL;
+	}
 
 	uint8_t temp[2];
 	if(i2cRead(MPL3115_ADDR,OUT_T_MSB,temp,2)==CPAL_FAIL)
+	{
+		toggleOST();
 		return MPL3115_FAIL;
+	}
 
 
 	mpl3115Temperature=(float)(temp[0])+(temp[1]>>4)/16.0;

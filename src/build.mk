@@ -15,6 +15,7 @@ CSRC += $(TARGET_SRC_PATH)/bmp085.c
 CSRC += $(TARGET_SRC_PATH)/i2c.c
 CSRC += $(TARGET_SRC_PATH)/max44009.c
 CSRC += $(TARGET_SRC_PATH)/mpl3115.c
+CSRC += $(TARGET_SRC_PATH)/si7021.c
 
 # C++ source files included in this build.
 CPPSRC += $(TARGET_SRC_PATH)/application.cpp

@@ -70,5 +70,9 @@ void loop()
 	else
 		DEBUG("MPL3115 Failure");
 
+    float humidity=si7021Humidity();
+    float temperature=si7021Temperature();
+    DEBUG("Si7021 Humidity=%f Temperature=%f",humidity,temperature);
+
 }
 
