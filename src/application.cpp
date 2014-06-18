@@ -3,6 +3,7 @@
 #define MAX_ONEWIRE 9
 
 DS18B20 *ds1,*ds2;
+SI7021 *si;
 
 uint8_t addr1[]={0x28,0xfb,0x21,0xb7,0x03,0x00,0x00,0x52};
 uint8_t addr2[]={0x28,0xae,0x31,0x61,0x03,0x00,0x00,0xe3};
@@ -29,7 +30,7 @@ void setup()
 
 	ds1=new DS18B20(D2,addr1);
 	ds2=new DS18B20(D2,addr2);
-
+	si=new SI7021();
 }
 
 // This routine loops forever
@@ -70,8 +71,9 @@ void loop()
 	else
 		DEBUG("MPL3115 Failure");
 
-    float humidity=si7021Humidity();
-    float temperature=si7021Temperature();
+
+    float humidity=si->getHumidity();
+    float temperature=si->getTemperature();
     DEBUG("Si7021 Humidity=%f Temperature=%f",humidity,temperature);
 
 }
