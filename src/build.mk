@@ -15,7 +15,6 @@ CSRC += $(TARGET_SRC_PATH)/bmp085.c
 CSRC += $(TARGET_SRC_PATH)/i2c.c
 CSRC += $(TARGET_SRC_PATH)/max44009.c
 CSRC += $(TARGET_SRC_PATH)/mpl3115.c
-CSRC += $(TARGET_SRC_PATH)/si7021.c
 
 # C++ source files included in this build.
 CPPSRC += $(TARGET_SRC_PATH)/application.cpp
@@ -23,6 +22,7 @@ CPPSRC += $(TARGET_SRC_PATH)/main.cpp
 CPPSRC += $(TARGET_SRC_PATH)/newlib_stubs.cpp
 CPPSRC += $(TARGET_SRC_PATH)/DS18B20.cpp
 CPPSRC += $(TARGET_SRC_PATH)/OneWire.cpp
+CPPSRC += $(TARGET_SRC_PATH)/si7021.cpp
 CPPSRC += $(TARGET_SRC_PATH)/spark_utilities.cpp
 CPPSRC += $(TARGET_SRC_PATH)/spark_wiring.cpp
 CPPSRC += $(TARGET_SRC_PATH)/spark_wiring_eeprom.cpp
