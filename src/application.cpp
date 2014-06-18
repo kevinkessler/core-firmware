@@ -36,7 +36,7 @@ void setup()
 void loop()
 {
 
-    delay(10000);
+    delay(5000);
 
 	char rom[35];
 	ds1->getROM(rom);
