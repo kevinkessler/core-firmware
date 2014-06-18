@@ -21,10 +21,6 @@ uint8_t mpl3115Init()
 	if(i2cWrite(MPL3115_ADDR,PT_DATA_CFG,&buffer,1)==CPAL_FAIL)
 		return MPL3115_FAIL;
 
-	buffer=0x39;
-	if(i2cWrite(MPL3115_ADDR,CTRL_REG1,&buffer,1)==CPAL_FAIL)
-		return MPL3115_FAIL;
-
 	toggleOST();
 
 	return MPL3115_SUCCESS;
@@ -72,7 +68,7 @@ uint8_t mpl3115Measure()
 
 float mpl3115GetPressure()
 {
-	return mpl3115Pressure;
+	return mpl3115Pressure + 1500.0; // Fudge Factor
 }
 
 float mpl3115GetTemperature()
@@ -86,6 +82,7 @@ void toggleOST()
 
 	i2cRead(MPL3115_ADDR,CTRL_REG1,&status,1);
 	status &= ~(1<<1);
+
 	i2cWrite(MPL3115_ADDR,CTRL_REG1,&status,1);
 
 	status |= (1<<1);
