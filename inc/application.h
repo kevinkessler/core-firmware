@@ -50,5 +50,6 @@
 #include "DS18B20.h"
 #include "OneWire.h"
 #include "mpl3115.h"
+#include "si7021.h"
 
 #endif /* APPLICATION_H_ */
