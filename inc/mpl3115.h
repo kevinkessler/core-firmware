@@ -8,9 +8,6 @@
 #ifndef MPL3115_H_
 #define MPL3115_H_
 
-#ifdef __cplusplus
- extern "C" {
-#endif
 
 #include "i2c.h"
 
@@ -24,14 +21,20 @@
 #define MPL3115_FAIL 0
 #define MPL3115_SUCCESS 1
 
-uint8_t mpl3115Measure(void);
-float mpl3115GetPressure(void);
-float mpl3115GetTemperature(void);
-uint8_t mpl3115Init(void);
-void toggleOST(void);
+class MPL3115 {
+private:
+	float mpl3115Pressure;
+	float mpl3115Temperature;
+	void toggleOST(void);
+	uint8_t init();
+public:
+	MPL3115();
+	uint8_t measure(void);
+	float getPressure(void);
+	float getTemperature(void);
 
-#ifdef __cplusplus
-}
-#endif
+};
+
+
 
 #endif /* MPL3115_H_ */

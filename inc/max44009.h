@@ -8,9 +8,6 @@
 #ifndef MAX44009_H_
 #define MAX44009_H_
 
-#ifdef __cplusplus
- extern "C" {
-#endif
 
 #include <math.h>
 #include "debug.h"
@@ -18,13 +15,18 @@
 
 #define MAX44009_FAIL 0
 #define MAX44009_ACTIVE 1
+#define MAX44009_SUCCESS 1
 
-float max44009GetLux(void);
+class MAX44009
+{
+private:
+	float lux;
+	uint8_t status;
 
-#ifdef __cplusplus
-}
-#endif
-
-
+public:
+	MAX44009();
+	uint8_t measure();
+	float getLux();
+};
 
 #endif /* MAX44009_H_ */

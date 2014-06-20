@@ -4,6 +4,9 @@
 
 DS18B20 *ds1,*ds2;
 SI7021 *si;
+MPL3115 *mpl;
+BMP085 *bmp;
+MAX44009 *max;
 
 uint8_t addr1[]={0x28,0xfb,0x21,0xb7,0x03,0x00,0x00,0x52};
 uint8_t addr2[]={0x28,0xae,0x31,0x61,0x03,0x00,0x00,0xe3};
@@ -11,8 +14,6 @@ uint8_t addr2[]={0x28,0xae,0x31,0x61,0x03,0x00,0x00,0xe3};
 void setup()
 {
 	i2cInitialize();
-	bmp085Calibration();
-	mpl3115Init();
 
 #if defined (DEBUG_BUILD)
 	DEBUG("One Wire Device Addresses");
@@ -31,11 +32,16 @@ void setup()
 	ds1=new DS18B20(D2,addr1);
 	ds2=new DS18B20(D2,addr2);
 	si=new SI7021();
+	mpl=new MPL3115();
+	bmp=new BMP085();
+	max=new MAX44009();
 }
 
 // This routine loops forever
 void loop()
 {
+
+	uint8_t status;
 
     delay(10000);
 
@@ -52,29 +58,31 @@ void loop()
 
 	DEBUG("Temperature: %2.2f Celsius, %2.2f Fahrenheit (Chip Name: %s %s)", celsius, fahrenheit, ds1->getChipName(),rom);
 
+	status=bmp->measure();
+	if(status==BMP085_SUCCESS)
+		DEBUG("BMP085 T=%f Press=%f",bmp->getTemperature(),bmp->getPressure());
+	else
+		DEBUG("BMP085 Failed");
 
-	float temp=getBMP085Temperature();
-	float press=getBMP085Pressure();
+	status=max->measure();
+	if(status==MAX44009_SUCCESS)
+		DEBUG("Lux=%f",max->getLux());
+	else
+		DEBUG("MAX44009 Failed");
 
-	DEBUG("BMP085 T=%f Press=%f",temp,press);
-
-	float lux=max44009GetLux();
-	DEBUG("Lux=%f",lux);
-
-	uint8_t status=mpl3115Measure();
+	status=mpl->measure();
 	if(status==MPL3115_SUCCESS)
 	{
-		float temp=mpl3115GetTemperature();
-		float press=mpl3115GetPressure();
-		DEBUG("MPL3115 T=%f Press=%f",temp,press);
+		DEBUG("MPL3115 T=%f Press=%f",mpl->getTemperature(),mpl->getPressure());
 	}
 	else
 		DEBUG("MPL3115 Failure");
 
-
-    float humidity=si->getHumidity();
-    float temperature=si->getTemperature();
-    DEBUG("Si7021 Humidity=%f Temperature=%f",humidity,temperature);
+	status=si->measure();
+	if(status==SI7021_SUCCESS)
+		DEBUG("Si7021 Temperature=%f Humidity=%f",si->getTemperature(),si->getHumidity());
+	else
+		DEBUG("SI7021 Fail");
 
 }
 
