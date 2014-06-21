@@ -11,7 +11,7 @@ INCLUDE_DIRS += inc
 INCLUDE_DIRS += ../STM32_CPAL_Drivers/inc
 
 # C source files included in this build.
-CSRC += $(TARGET_SRC_PATH)/i2c.c
+CSRC += $(TARGET_SRC_PATH)/i2c_timer.c
 
 
 # C++ source files included in this build.
@@ -24,6 +24,7 @@ CPPSRC += $(TARGET_SRC_PATH)/si7021.cpp
 CPPSRC += $(TARGET_SRC_PATH)/mpl3115.cpp
 CPPSRC += $(TARGET_SRC_PATH)/bmp085.cpp
 CPPSRC += $(TARGET_SRC_PATH)/max44009.cpp
+CPPSRC += $(TARGET_SRC_PATH)/i2c_comm.cpp
 CPPSRC += $(TARGET_SRC_PATH)/spark_utilities.cpp
 CPPSRC += $(TARGET_SRC_PATH)/spark_wiring.cpp
 CPPSRC += $(TARGET_SRC_PATH)/spark_wiring_eeprom.cpp

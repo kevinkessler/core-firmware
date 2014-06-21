@@ -46,7 +46,7 @@
 
 #include "max44009.h"
 #include "bmp085.h"
-#include "i2c.h"
+#include "i2c_comm.h"
 #include "DS18B20.h"
 #include "OneWire.h"
 #include "mpl3115.h"

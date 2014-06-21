@@ -9,7 +9,7 @@
 #define SI7021_H_
 
 
-#include "i2c.h"
+#include "i2c_comm.h"
 
 #define SI7021_ADDR 0x40
 #define SI7021_FAIL 0
@@ -21,7 +21,7 @@ private:
 	float humidity;
 	float temperature;
 	uint8_t status;
-
+	I2C *i2c;
 public:
 	SI7021(void);
 	uint8_t measure();

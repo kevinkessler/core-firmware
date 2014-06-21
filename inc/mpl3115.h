@@ -8,8 +8,8 @@
 #ifndef MPL3115_H_
 #define MPL3115_H_
 
-
-#include "i2c.h"
+#include "spark_wiring.h"
+#include "i2c_comm.h"
 
 #define MPL3115_ADDR 0x60
 #define CTRL_REG1 0x26
@@ -27,6 +27,7 @@ private:
 	float mpl3115Temperature;
 	void toggleOST(void);
 	uint8_t init();
+	I2C *i2c;
 public:
 	MPL3115();
 	uint8_t measure(void);

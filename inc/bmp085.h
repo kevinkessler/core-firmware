@@ -10,7 +10,8 @@
 
 
 #include "debug.h"
-#include "i2c.h"
+#include "spark_wiring.h"
+#include "i2c_comm.h"
 #include <math.h>
 
 extern void delay (uint32_t);
@@ -46,6 +47,7 @@ private:
 	int32_t b5;
 	float temperature;
 	float pressure;
+	I2C *i2c;
 
 	uint8_t calibration(void);
 	uint16_t readInt(uint8_t);

@@ -11,7 +11,7 @@
 
 #include <math.h>
 #include "debug.h"
-#include "i2c.h"
+#include "i2c_comm.h"
 
 #define MAX44009_FAIL 0
 #define MAX44009_ACTIVE 1
@@ -22,6 +22,7 @@ class MAX44009
 private:
 	float lux;
 	uint8_t status;
+	I2C *i2c;
 
 public:
 	MAX44009();

@@ -9,6 +9,8 @@
 
 MAX44009::MAX44009()
 {
+	i2c=I2C::getInstance();
+
 	status=MAX44009_ACTIVE;
 	lux=0.0;
 }
@@ -23,9 +25,9 @@ uint8_t MAX44009::measure()
 	uint8_t buffer;
 
 	if(status == MAX44009_FAIL)
-		i2cReset();
+		i2c->reset();
 
-	if(i2cRead(0x4B,0x03,&buffer,1) == CPAL_FAIL)
+	if(i2c->read(0x4B,0x03,&buffer,1) == CPAL_FAIL)
 	{
 		status=MAX44009_FAIL;
 		return 0.0;
@@ -36,7 +38,7 @@ uint8_t MAX44009::measure()
 	uint8_t luxHigh=buffer;
 
 
-	if(i2cRead(0x4B,0x04,&buffer,1) == CPAL_FAIL)
+	if(i2c->read(0x4B,0x04,&buffer,1) == CPAL_FAIL)
 	{
 		status=MAX44009_FAIL;
 		return 0.0;

@@ -8,6 +8,8 @@
 
 SI7021::SI7021()
 {
+	i2c=I2C::getInstance();
+
 	status=SI7021_ACTIVE;
 	temperature=-100.0;
 	humidity=-100.0;
@@ -18,7 +20,7 @@ uint8_t SI7021::measure()
 {
 	uint8_t buffer[2];
 
-	if(i2cRead(SI7021_ADDR,0xE5,buffer,2)==CPAL_FAIL)
+	if(i2c->read(SI7021_ADDR,0xE5,buffer,2)==CPAL_FAIL)
 	{
 		status=SI7021_FAIL;
 		temperature=-100.0;
@@ -32,7 +34,7 @@ uint8_t SI7021::measure()
 
 	humidity = (float)((125.0*rh_code)/65536.0 - 6.0);
 
-	if(i2cRead(SI7021_ADDR,0xE3,buffer,2)==CPAL_FAIL)
+	if(i2c->read(SI7021_ADDR,0xE3,buffer,2)==CPAL_FAIL)
 	{
 		status=SI7021_FAIL;
 		temperature=-100.0;

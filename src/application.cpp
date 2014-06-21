@@ -13,7 +13,6 @@ uint8_t addr2[]={0x28,0xae,0x31,0x61,0x03,0x00,0x00,0xe3};
 
 void setup()
 {
-	i2cInitialize();
 
 #if defined (DEBUG_BUILD)
 	DEBUG("One Wire Device Addresses");

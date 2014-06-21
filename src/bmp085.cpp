@@ -9,6 +9,7 @@
 
 BMP085::BMP085()
 {
+	i2c=I2C::getInstance();
 	calibration();
 }
 
@@ -39,7 +40,7 @@ uint16_t BMP085::readInt(uint8_t addr)
 {
 	uint8_t buffer[2];
 
-	if(i2cRead(BMP085_ADDRESS, addr, buffer, 2)==CPAL_FAIL)
+	if(i2c->read(BMP085_ADDRESS, addr, buffer, 2)==CPAL_FAIL)
 	{
 		status=BMP085_FAIL;
 		return 0;
@@ -58,7 +59,7 @@ int16_t BMP085::readTemperature()
 
 	buffer[0]=0x2E;
 
-	if(i2cWrite(BMP085_ADDRESS, 0xF4, buffer, 1)==CPAL_FAIL)
+	if(i2c->write(BMP085_ADDRESS, 0xF4, buffer, 1)==CPAL_FAIL)
 	{
 		status=BMP085_FAIL;
 		return -100;
@@ -88,7 +89,7 @@ int32_t BMP085::readPressure()
 	uint8_t buffer[3];
 
 	buffer[0]=0x34 + (OSS<<6);
-	if(i2cWrite(BMP085_ADDRESS, 0xF4, buffer, 1)==CPAL_FAIL)
+	if(i2c->write(BMP085_ADDRESS, 0xF4, buffer, 1)==CPAL_FAIL)
 	{
 		status=BMP085_FAIL;
 		return -100;
@@ -96,7 +97,7 @@ int32_t BMP085::readPressure()
 
 	delay(2 + (3 << OSS));
 
-	if(i2cRead(BMP085_ADDRESS, 0xF6, buffer, 3)==CPAL_FAIL)
+	if(i2c->read(BMP085_ADDRESS, 0xF6, buffer, 3)==CPAL_FAIL)
 	{
 		status=BMP085_FAIL;
 		return -100;
@@ -135,7 +136,7 @@ uint8_t BMP085::measure()
 {
 	if (status == BMP085_FAIL)
 	{
-		i2cReset();
+		i2c->reset();
 		if(calibration() == BMP085_FAIL)
 			return BMP085_FAIL;
 	}

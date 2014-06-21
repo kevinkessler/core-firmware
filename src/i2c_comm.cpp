@@ -1,55 +1,17 @@
 /*
- * i2c.c
+ * i2c_comm.cpp
  *
- *  Created on: Mar 24, 2014
+ *  Created on: Jun 21, 2014
  *      Author: Kevin
  */
+#include "i2c_comm.h"
 
-#include "i2c.h"
-
-void i2cTimerInit()
+I2C::I2C()
 {
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,ENABLE);
-
-	NVIC_InitTypeDef NVIC_InitStructure;
-	NVIC_InitStructure.NVIC_IRQChannel=TIM4_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority=1;
-	NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;
-
-	NVIC_Init(&NVIC_InitStructure);
-
-	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
-	TIM_TimeBaseStructure.TIM_ClockDivision=TIM_CKD_DIV1;
-	TIM_TimeBaseStructure.TIM_CounterMode=TIM_CounterMode_Up;
-	TIM_TimeBaseStructure.TIM_Prescaler=2;
-	TIM_TimeBaseStructure.TIM_Period=24000;
-	TIM_TimeBaseStructure.TIM_RepetitionCounter=0;
-
-	TIM_TimeBaseInit(TIM4,&TIM_TimeBaseStructure);
-
-	TIM_Cmd(TIM4,ENABLE);
-	TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE);
-
+	initialize();
 }
 
-void i2cTimeDeInit()
-{
-	NVIC_InitTypeDef NVIC_InitStructure;
-	NVIC_InitStructure.NVIC_IRQChannel=TIM4_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority=1;
-	NVIC_InitStructure.NVIC_IRQChannelCmd=DISABLE;
-
-	NVIC_Init(&NVIC_InitStructure);
-
-	TIM_ITConfig(TIM4,TIM_IT_Update,DISABLE);
-	TIM_Cmd(TIM4,DISABLE);
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,DISABLE);
-
-}
-
-void i2cInitialize()
+void I2C::initialize()
 {
 	I2C_InitTypeDef *InitStruct=(I2C_InitTypeDef *)malloc(sizeof(I2C_InitTypeDef));
 	InitStruct->I2C_ClockSpeed          = 100000;                        /* Initialize the I2C_ClockSpeed member */
@@ -62,7 +24,6 @@ void i2cInitialize()
 	CPAL_I2C_StructInit(&I2C1_DevStructure);
 	I2C1_DevStructure.CPAL_Mode = CPAL_MODE_MASTER;
 	I2C1_DevStructure.CPAL_ProgModel = CPAL_PROGMODEL_INTERRUPT;
-	//I2C1_DevStructure.wCPAL_Options=CPAL_OPT_NO_MEM_ADDR;
 	I2C1_DevStructure.wCPAL_Options=0x00;
 
 	I2C1_DevStructure.pCPAL_I2C_Struct = InitStruct;
@@ -71,7 +32,7 @@ void i2cInitialize()
 	CPAL_I2C_Init(&I2C1_DevStructure);
 }
 
-uint8_t i2cWrite(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData)
+uint8_t I2C::write(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData)
 {
 	CPAL_TransferTypeDef tx;
 
@@ -101,7 +62,7 @@ uint8_t i2cWrite(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData)
 	return CPAL_PASS;
 }
 
-uint8_t i2cRead(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData)
+uint8_t I2C::read(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData)
 {
 	CPAL_TransferTypeDef rx;
 	rx.pbBuffer=buf;
@@ -128,32 +89,24 @@ uint8_t i2cRead(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData)
 	return CPAL_PASS;
 }
 
-void i2cReset()
+void I2C::reset()
 {
 	CPAL_I2C_DeInit(&I2C1_DevStructure);
 	CPAL_I2C_Init(&I2C1_DevStructure);
 }
 
- void TIM4_IRQHandler()
-{
-	if(TIM_GetITStatus(TIM4,TIM_IT_Update) != RESET)
-	{
-		TIM_ClearITPendingBit(TIM4,TIM_IT_Update);
-		CPAL_I2C_TIMEOUT_Manager();
-	}
-}
 
 
-void i2cScan()
+void I2C::scan()
 {
     uint8_t results[256];
     for (uint8_t n=0;n<255;n++)
     {
-    	if(i2cWrite(n,0,&n,0) == CPAL_FAIL)
+    	if(write(n,0,&n,0) == CPAL_FAIL)
     		results[n]=0;
     	else
     		results[n]=1;
-    	i2cReset();
+    	reset();
     }
 
     for(uint8_t n=0;n<255;n+=5)
@@ -162,3 +115,4 @@ void i2cScan()
     }
 
 }
+
