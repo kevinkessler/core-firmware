@@ -24,6 +24,7 @@ CPPSRC += $(TARGET_SRC_PATH)/si7021.cpp
 CPPSRC += $(TARGET_SRC_PATH)/mpl3115.cpp
 CPPSRC += $(TARGET_SRC_PATH)/bmp085.cpp
 CPPSRC += $(TARGET_SRC_PATH)/max44009.cpp
+CPPSRC += $(TARGET_SRC_PATH)/HIH6130.cpp
 CPPSRC += $(TARGET_SRC_PATH)/i2c_comm.cpp
 CPPSRC += $(TARGET_SRC_PATH)/spark_utilities.cpp
 CPPSRC += $(TARGET_SRC_PATH)/spark_wiring.cpp

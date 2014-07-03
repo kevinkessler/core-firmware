@@ -12,6 +12,9 @@
  extern "C" {
 #endif
 
+//extern void (*Wiring_TIM4_Interrupt_Handler)(void);
+
+
 #include <stdlib.h>
 #include "debug.h"
 #include "cpal.h"
@@ -28,10 +31,7 @@ extern void delay (uint32_t);
 void i2cInitialize(void);
 void i2cTimerInit(void);
 void i2cTimeDeInit(void);
-uint8_t i2cWrite(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData);
-uint8_t i2cRead(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData);
-void i2cReset(void);
-void i2cScan(void);
+//extern void TIM4_Interrupt_Handler(void);
 
 #ifdef __cplusplus
 }

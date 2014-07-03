@@ -7,6 +7,7 @@ SI7021 *si;
 MPL3115 *mpl;
 BMP085 *bmp;
 MAX44009 *max;
+HIH6130 *hih;
 
 uint8_t addr1[]={0x28,0xfb,0x21,0xb7,0x03,0x00,0x00,0x52};
 uint8_t addr2[]={0x28,0xae,0x31,0x61,0x03,0x00,0x00,0xe3};
@@ -34,6 +35,7 @@ void setup()
 	mpl=new MPL3115();
 	bmp=new BMP085();
 	max=new MAX44009();
+	hih=new HIH6130();
 }
 
 // This routine loops forever
@@ -82,6 +84,13 @@ void loop()
 		DEBUG("Si7021 Temperature=%f Humidity=%f",si->getTemperature(),si->getHumidity());
 	else
 		DEBUG("SI7021 Fail");
+
+	status=hih->measure();
+	if(status==HIH6130_SUCCESS)
+		DEBUG("HIH6130 Temperature=%f Humidity=%f",hih->getTemperature(),hih->getHumidity());
+	else
+		DEBUG("HIH6130 Fail");
+
 
 }
 

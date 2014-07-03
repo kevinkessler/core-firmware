@@ -32,10 +32,42 @@ void I2C::initialize()
 	CPAL_I2C_Init(&I2C1_DevStructure);
 }
 
+uint8_t I2C::write(uint8_t slave, uint8_t *buf, uint8_t numData)
+{
+	CPAL_TransferTypeDef tx;
+
+	I2C1_DevStructure.wCPAL_Options=CPAL_OPT_NO_MEM_ADDR;
+
+	tx.pbBuffer=buf;
+	tx.wAddr1=slave<<1;
+	tx.wAddr2=0x00;
+	tx.wNumData=numData;
+	I2C1_DevStructure.pCPAL_TransferTx=&tx;
+
+	if(CPAL_I2C_Write(&I2C1_DevStructure) == CPAL_PASS)
+	{
+		while((I2C1_DevStructure.CPAL_State != CPAL_STATE_READY) && (I2C1_DevStructure.CPAL_State != CPAL_STATE_ERROR) )
+		{
+
+		}
+
+		if(I2C1_DevStructure.CPAL_State == CPAL_STATE_ERROR)
+		{
+			return CPAL_FAIL;
+		}
+
+	}
+	else
+		return CPAL_FAIL;
+
+	return CPAL_PASS;
+}
+
 uint8_t I2C::write(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData)
 {
 	CPAL_TransferTypeDef tx;
 
+	I2C1_DevStructure.wCPAL_Options=0x00;
 
 	tx.pbBuffer=buf;
 	tx.wAddr1=slave<<1;
@@ -65,9 +97,42 @@ uint8_t I2C::write(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData)
 uint8_t I2C::read(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData)
 {
 	CPAL_TransferTypeDef rx;
+
+	I2C1_DevStructure.wCPAL_Options=0x00;
+
 	rx.pbBuffer=buf;
 	rx.wAddr1=slave<<1;
 	rx.wAddr2=addr2;
+	rx.wNumData=numData;
+	I2C1_DevStructure.pCPAL_TransferRx=&rx;
+
+	if(CPAL_I2C_Read(&I2C1_DevStructure)==CPAL_PASS)
+	{
+		while((I2C1_DevStructure.CPAL_State != CPAL_STATE_READY) && (I2C1_DevStructure.CPAL_State != CPAL_STATE_ERROR) )
+		{
+		}
+
+		if(I2C1_DevStructure.CPAL_State == CPAL_STATE_ERROR)
+		{
+			return CPAL_FAIL;
+		}
+
+	}
+	else
+		return CPAL_FAIL;
+
+	return CPAL_PASS;
+}
+
+uint8_t I2C::read(uint8_t slave, uint8_t *buf, uint8_t numData)
+{
+	CPAL_TransferTypeDef rx;
+
+	I2C1_DevStructure.wCPAL_Options=CPAL_OPT_NO_MEM_ADDR;
+
+	rx.pbBuffer=buf;
+	rx.wAddr1=slave<<1;
+	rx.wAddr2=0x00;
 	rx.wNumData=numData;
 	I2C1_DevStructure.pCPAL_TransferRx=&rx;
 

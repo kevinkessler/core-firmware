@@ -35,7 +35,11 @@ public:
 	}
 
 	uint8_t write(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData);
+	uint8_t write(uint8_t slave, uint8_t *buf, uint8_t numData);
+
 	uint8_t read(uint8_t slave, uint8_t addr2, uint8_t *buf, uint8_t numData);
+	uint8_t read(uint8_t slave, uint8_t *buf, uint8_t numData);
+
 	void reset();
 	void scan();
 

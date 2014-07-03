@@ -9,6 +9,7 @@
 
 void i2cTimerInit()
 {
+	//Wiring_TIM4_Interrupt_Handler=TIM4_Interrupt_Handler;
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4,ENABLE);
 
 	NVIC_InitTypeDef NVIC_InitStructure;
@@ -35,6 +36,7 @@ void i2cTimerInit()
 
 void i2cTimeDeInit()
 {
+	//Wiring_TIM4_Interrupt_Handler=NULL;
 	NVIC_InitTypeDef NVIC_InitStructure;
 	NVIC_InitStructure.NVIC_IRQChannel=TIM4_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=0;
@@ -50,7 +52,7 @@ void i2cTimeDeInit()
 }
 
 
- void TIM4_IRQHandler()
+void TIM4_IRQHandler()
 {
 	if(TIM_GetITStatus(TIM4,TIM_IT_Update) != RESET)
 	{
